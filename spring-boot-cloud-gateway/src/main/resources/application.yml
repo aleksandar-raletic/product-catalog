@@ -1,0 +1,27 @@
+server:
+  port: 9200
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: KATALOG-PROIZVODA
+#          uri: http://localhost:8500/
+          uri: lb://KATALOG-PROIZVODA
+          predicates:
+            - Path=/katalogproizvoda/**
+        - id: PORUCIVANJE-PROIZVODA
+#          uri: http://localhost:8600/
+          uri: lb://PORUCIVANJE-PROIZVODA
+          predicates:
+            - Path=/porudzbina/**
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
